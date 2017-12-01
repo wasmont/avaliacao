@@ -48,7 +48,7 @@ use app\models\EmpresaModel;
     function getEndereco() {
         // Se o campo CEP não estiver vazio
         if($.trim($("#funcionariomodel-cep").val()) != ""){
-            var url = "http://viacep.com.br/ws/"+$("#funcionariomodel-cep").val()+"/json/";
+            var url = "https://viacep.com.br/ws/"+$("#funcionariomodel-cep").val()+"/json/";
             $.getJSON(url, function(result){
                 console.log(result['cep']);
                 $("#funcionariomodel-endereco").val(unescape(result["logradouro"]));

@@ -32,7 +32,7 @@ class CorrespondenciaModel extends \yii\db\ActiveRecord
             [['Contato_id'], 'required'],
             [['Contato_id'], 'integer'],
             [['datahora'], 'safe'],
-            [['Contato_id'], 'exist', 'skipOnError' => true, 'targetClass' => Contato::className(), 'targetAttribute' => ['Contato_id' => 'id']],
+            // [['Contato_id'], 'exist', 'skipOnError' => true, 'targetClass' => Contato::className(), 'targetAttribute' => ['Contato_id' => 'id']],
         ];
     }
 
@@ -58,27 +58,27 @@ class CorrespondenciaModel extends \yii\db\ActiveRecord
 
     public function Relatorio($sobrenome){
         if($sobrenome==null)
-            $query = "  SELECT A.ID AS ID, B.NOME AS CORRESPONDENCIA, CONCAT( B.NOME,' ',B.SOBRENOME) AS CONTATO, D.NOME AS EMPRESA,
-                        D.CNPJ AS CNPJ, B.EMAIL AS EMAIL, B.TELEFONE AS TELEFONE, B.CELULAR AS CELULAR
-                        	FROM CORRESPONDENCIA A
-                        INNER JOIN CONTATO B
-                        	ON A.Contato_id = B.id
-                        INNER JOIN CONTATO_EMPRESA C
-                        	ON C.Contato_id = B.id
-                        INNER JOIN EMPRESA D
-                        	ON C.Empresa_id = D.id
-                        WHERE SOBRENOME LIKE '%Silva%' ";
+            $query = "  select a.id as id, b.nome as correspondencia, concat( b.nome,' ',b.sobrenome) as contato, d.nome as empresa,
+                        d.cnpj as cnpj, b.email as email, b.telefone as telefone, b.celular as celular
+                        	from correspondencia a
+                        inner join contato b
+                        	on a.contato_id = b.id
+                        inner join contato_empresa c
+                        	on c.contato_id = b.id
+                        inner join empresa d
+                        	on c.empresa_id = d.id
+                        where sobrenome like '%Silva%' ";
         else
-            $query = "  SELECT A.ID AS ID, B.NOME AS CORRESPONDENCIA, CONCAT( B.NOME,' ',B.SOBRENOME) AS CONTATO, D.NOME AS EMPRESA,
-                        D.CNPJ AS CNPJ, B.EMAIL AS EMAIL, B.TELEFONE AS TELEFONE, B.CELULAR AS CELULAR
-                        	FROM CORRESPONDENCIA A
-                        INNER JOIN CONTATO B
-                        	ON A.Contato_id = B.id
-                        INNER JOIN CONTATO_EMPRESA C
-                        	ON C.Contato_id = B.id
-                        INNER JOIN EMPRESA D
-                        	ON C.Empresa_id = D.id
-                        WHERE SOBRENOME LIKE '%".$sobrenome."%'";
+            $query = "  select a.id as id, b.nome as correspondencia, concat( b.nome,' ',b.sobrenome) as contato, d.nome as empresa,
+                        d.cnpj as cnpj, b.email as email, b.telefone as telefone, b.celular as celular
+                        	from correspondencia a
+                        inner join contato b
+                        	on a.contato_id = b.id
+                        inner join contato_empresa c
+                        	on c.contato_id = b.id
+                        inner join empresa d
+                        	on c.empresa_id = d.id
+                        where sobrenome like '%".$sobrenome."%'";
 
         $connection = \Yii::$app->db;
         $command = $connection->createCommand($query);
